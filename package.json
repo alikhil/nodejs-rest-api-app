@@ -19,5 +19,10 @@
     "passport": "^0.3.2",
     "passport-jwt": "^2.2.1",
     "winston": "^2.3.0"
+  },
+  "apidoc": {
+    "title": "Test node api",
+    "version":"1.0.0",
+    "url" : "http://localhost/api/v1"
   }
 }

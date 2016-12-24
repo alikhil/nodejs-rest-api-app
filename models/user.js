@@ -4,7 +4,6 @@ var mongoose = require("mongoose");
 var bcrypt = require("bcrypt-nodejs");
 
 var Schema = mongoose.Schema;
-// mongoose.connect(config.database);
 var UserSchema = new Schema({
     name: {
         type: String,

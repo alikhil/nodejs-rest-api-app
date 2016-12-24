@@ -10,79 +10,66 @@ var jwt = require('jwt-simple');
 // configuring passport to work with jwt
 require("../../../config/passport")(passport);
 
-mongoose.connect(config.database)
-    .then(() => console.log("connected to database"))
-    .catch((err) => console.log(`connection to database ${config.database} failed`));
-
+function init(db) {
+    mongoose = db;
+}
 var router = require("express").Router(); 
 
-function getToken(headers) {
-    if (headers && headers.authorization) {
-    var parted = headers.authorization.split(' ');
-    if (parted.length === 2) {
-        return parted[1];
-    } else {
-        return null;
-    }
-  } else {
-        return null;
-  }
-};
-
-function safeDecode(token) {
-    return new Promise(
-        function(resolve, reject) {
-            try {
-                var decoded = jwt.decode(token, config.secret);
-                resolve(decoded);
-            }
-            catch(err){
-                reject(Error(err));
-            }
-    });
-}
-
-// Authentication checker middleware for the router
-router.use((req, res, next) => {
-    if (req.url === "/signup" || req.url === "/auth") {
-        return next();
-    }
-    var token = getToken(req.headers);
-    if (!token) {
-       res.json({ status: false, message: "Access denied. Token not provided." });
-    } else {
-        safeDecode(token)
-            .then((decoded) => {
-                User.findOne({ name: decoded.name })
-                    .then((user) => {
-                        if (!user) {
-                            return res.json({ status: false, message: "Authentication failed. User not found." });
-                        } else {
-                            req.user = user;
-                            next();
-                        }
-                    })
-                    .catch((err) => {
-                        return res.json({ status: false, message: "Authentication failed. " + err});
-                    });
-            })
-            .catch((err) => {
-                return res.json({ status: false, message: "Authentication failed. " + err});
-            });
-    }
-
-});
-
 var users = [
-     { version: "v1"},
     { name: "alik", age: 18},
     { name: "Timur", age: 19}
 ];
 
+/**
+ * @apiDefine Status
+ * @apiSuccess {Boolean} succes Status of response. `true` -> ok. `false` -> see `message`
+ */
+/**
+ * @apiDefine Message
+ * @apiSuccess {String} [message] Message describing status of response.
+ */
+
+/**
+ * @apiName Users
+ * @apiGroup Users
+ * @api {get} /users/
+ * @apiDescription Getting list of `User`s
+ * @apiHeader authorization JWT token that given by `/auth` method
+ * @apiVersion 1.0.0
+ * @apiUse Status
+ * @apiUse Message
+ * @apiSuccess {User[]} users List of users of type `User`
+ * @apiSampleRequest http://localhost:3535/api/v1/users/
+ * @apiSuccessExample {json} Success-Response:
+ *  HTTP/1.1 200 OK
+ *  {
+ *      "status": true,
+ *      "users": [ {"name": "alik", "age": 19 } ]
+ *  }
+ */
 router.get("/users", (req, res, next) => {
-    users.push(req.user);
-    res.status(200).json(users);
+    res.status(200).json({ status:true, users });
 });
+
+
+/**
+ * @apiName SignUp
+ * @apiGroup Authorization
+ * @apiVersion 1.0.0
+ * @apiDescription Creates user with `name` and `password`.
+ * @api {post} /signup/
+ * @apiParam {String} name Username
+ * @apiParam {String} password Password
+ * @apiUse Message
+ * @apiUse Status
+ * @apiSampleRequest http://localhost:3535/api/v1/signup/
+ * @apiSuccessExample {json} Success-Response:
+ *  HTTP/1.1 200 OK
+ *  {
+ *      "status": true,
+ *      "message": "Successful created new user."
+ *  }
+ */
 
 router.post("/signup", (req, res) => {
     if (!req.body.name || !req.body.password) {
@@ -101,6 +88,27 @@ router.post("/signup", (req, res) => {
             });
     }
 });
+
+
+/**
+ * @apiName Auth
+ * @apiGroup Authorization
+ * @apiVersion 1.0.0
+ * @apiDescription Authorizes user by his `name` and `password` and returns `token` to access other api functions. 
+ * @api {post} /auth/
+ * @apiParam {String} name Username
+ * @apiParam {String} password Password of user
+ * @apiUse Status
+ * @apiUse Message
+ * @apiSuccess {String} [token] Contains jwt token if authorization succes 
+ * @apiSampleRequest http://localhost:3535/api/v1/auth/
+ * @apiSuccessExample {json} Success-Response:
+ *  HTTP/1.1 200 OK
+ *  {
+ *      "status": true,
+ *      "token": "JWT long token here_asxassdv,d;fmdfmgdflfmdlmgdlfmgldfmgldmfgldfgdlfm"
+ *  }
+ */
 
 router.post("/auth", (req, res) => {
     if (!req.body.name || !req.body.password) {
@@ -131,4 +139,7 @@ router.post("/auth", (req, res) => {
     }
 });
 
-module.exports = router;
+module.exports = {
+    init,
+    router
+}
