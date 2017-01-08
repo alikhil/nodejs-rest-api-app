@@ -13,7 +13,7 @@ var router = require("express").Router();
  * @apiSuccess {Object[]} users List of real users this service.
  * @apiUse Status
  * @apiUse Message
- * @apiSampleRequest http://localhost:3535/api/v2/users/
+ * @apiSampleRequest https://nodejs-rest-api-app-alikhil.c9users.io/api/v2/users/
 
  */
 router.get("/users", (req, res, next) => {

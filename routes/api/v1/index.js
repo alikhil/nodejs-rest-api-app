@@ -39,7 +39,6 @@ var users = [
  * @apiUse Status
  * @apiUse Message
  * @apiSuccess {User[]} users List of users of type `User`
- * @apiSampleRequest http://localhost:3535/api/v1/users/
  * @apiSuccessExample {json} Success-Response:
  *  HTTP/1.1 200 OK
  *  {
@@ -62,7 +61,6 @@ router.get("/users", (req, res, next) => {
  * @apiParam {String} password Password
  * @apiUse Message
  * @apiUse Status
- * @apiSampleRequest http://localhost:3535/api/v1/signup/
  * @apiSuccessExample {json} Success-Response:
  *  HTTP/1.1 200 OK
  *  {
@@ -101,7 +99,6 @@ router.post("/signup", (req, res) => {
  * @apiUse Status
  * @apiUse Message
  * @apiSuccess {String} [token] Contains jwt token if authorization succes 
- * @apiSampleRequest http://localhost:3535/api/v1/auth/
  * @apiSuccessExample {json} Success-Response:
  *  HTTP/1.1 200 OK
  *  {

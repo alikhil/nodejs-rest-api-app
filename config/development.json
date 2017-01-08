@@ -1,6 +1,6 @@
 {
     "host": "localhost",
-    "port": 3535,
+    "port": 8080,
     "logFile": "all.log",
     "database": "mongodb://localhost/node_api",
     "secret": "top_secret_word_ever_been"

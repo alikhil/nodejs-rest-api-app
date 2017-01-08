@@ -61,13 +61,13 @@ define({ "api": [
         }
       ]
     },
+    "filename": "routes/api/v1/index.js",
+    "groupTitle": "Authorization",
     "sampleRequest": [
       {
-        "url": "http://localhost:3535/api/v1/auth/"
+        "url": "https://nodejs-rest-api-app-alikhil.c9users.io/api/v1/auth/"
       }
-    ],
-    "filename": "routes/api/v1/index.js",
-    "groupTitle": "Authorization"
+    ]
   },
   {
     "name": "SignUp",
@@ -97,11 +97,6 @@ define({ "api": [
         ]
       }
     },
-    "sampleRequest": [
-      {
-        "url": "http://localhost:3535/api/v1/signup/"
-      }
-    ],
     "success": {
       "examples": [
         {
@@ -130,7 +125,12 @@ define({ "api": [
       }
     },
     "filename": "routes/api/v1/index.js",
-    "groupTitle": "Authorization"
+    "groupTitle": "Authorization",
+    "sampleRequest": [
+      {
+        "url": "https://nodejs-rest-api-app-alikhil.c9users.io/api/v1/signup/"
+      }
+    ]
   },
   {
     "name": "Users",
@@ -186,13 +186,13 @@ define({ "api": [
         }
       ]
     },
+    "filename": "routes/api/v1/index.js",
+    "groupTitle": "Users",
     "sampleRequest": [
       {
-        "url": "http://localhost:3535/api/v1/users/"
+        "url": "https://nodejs-rest-api-app-alikhil.c9users.io/api/v1/users/"
       }
-    ],
-    "filename": "routes/api/v1/index.js",
-    "groupTitle": "Users"
+    ]
   },
   {
     "name": "users",
@@ -243,7 +243,7 @@ define({ "api": [
     },
     "sampleRequest": [
       {
-        "url": "http://localhost:3535/api/v2/users/"
+        "url": "https://nodejs-rest-api-app-alikhil.c9users.io/api/v2/users/"
       }
     ],
     "filename": "routes/api/v2/index.js",
