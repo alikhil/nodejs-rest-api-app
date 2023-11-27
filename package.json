@@ -17,7 +17,7 @@
     "mongoose": "^4.7.3",
     "morgan": "^1.7.0",
     "passport": "^0.3.2",
-    "passport-jwt": "^2.2.1",
+    "passport-jwt": "^4.0.0",
     "winston": "^2.3.0"
   },
   "apidoc": {
